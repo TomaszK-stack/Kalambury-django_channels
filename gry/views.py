@@ -27,7 +27,7 @@ def kalambury(request, room_name = None):
     if room_name == None:
         return render(request, "index.html", {"game_name":game_name})
     else:
-        return render(request, "kalambury.html")
+        return render(request, "kalambury.html", {"room_name": room_name})
 
 def user_logout(request):
     logout(request)
