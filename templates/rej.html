@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+
+    <link rel="stylesheet" href="{% static 'rejstyles.css' %}">
+  <title>Registration</title>
+</head>
+<body>
+  <h1>Registration</h1>
+  <form>
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>

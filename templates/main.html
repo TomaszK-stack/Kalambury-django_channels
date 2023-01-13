@@ -1,0 +1,43 @@
+<html>
+<head>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <title>Strona logowania</title>
+</head>
+<body>
+{%if user.is_authenticated%}
+    <div class="navbar">
+  <a href="home">Kości</a>
+  <a href="kalambury">Kalambury</a>
+  <a href="contact">Wisielec</a>
+   <div class = "rigt">
+       <a href="logout">Wyloguj się</a>
+
+   </div>
+
+
+
+
+    </div>
+{% else %}
+<div class="login-container">
+
+
+    <h1>Zaloguj się</h1>
+    <form action="/" method="post">
+        {% csrf_token %}
+        <label for="username">Nazwa użytkownika:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Hasło:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <a href="/rej">Nie masz konta? Zarejestruj się</a>
+        <input type="submit" value="Zaloguj się">
+
+    </form>
+</div>
+{% endif %}
+
+
+</body>
+</html>
