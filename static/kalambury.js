@@ -1,3 +1,5 @@
+const a = "a";
+
 const canvas = document.getElementById('drawing');
 const context = canvas.getContext('2d');
 
@@ -24,3 +26,5 @@ canvas.addEventListener('mousemove', e => {
 
 canvas.addEventListener('mouseup', () => isDrawing = false);
 canvas.addEventListener('mouseout', () => isDrawing = false);
+
+module.export  = {a};

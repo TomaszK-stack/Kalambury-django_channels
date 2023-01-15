@@ -75,9 +75,9 @@ input[type="submit"]:hover {
 }
 
 .canvas_cont{
-    display: inline-block;
-    height: 300px;
-    width: 300px;
+    display:flex;
+    height: 800px;
+    width: 800px;
     border: 2px solid black;
 }
 
@@ -89,5 +89,8 @@ input[type="submit"]:hover {
     margin-right: 0;
 }
 
-
+.form_cont{
+    /*stylowanie formularza*/
+    margin-left: auto;
+}
 
