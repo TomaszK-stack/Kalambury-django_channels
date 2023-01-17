@@ -1,21 +1,27 @@
-<!DOCTYPE html>
 <html>
 <head>
-  {% load static %}
+    {% load static %}
 
-    <link rel="stylesheet" href="{% static 'rejstyles.css' %}">
-  <title>Registration</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <title>Rejestracja</title>
 </head>
 <body>
-  <h1>Registration</h1>
-  <form>
-    <label for="username">Username:</label><br>
-    <input type="text" id="username" name="username"><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br>
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email"><br><br>
-    <input type="submit" value="Submit">
-  </form>
+
+
+
+
+
+<div class="login-container">
+
+
+    <h1>Zarejestruj się</h1>
+    <form  method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+      <button type="submit" >Zarejestruj się</button>
+    </form>
+</div>
+
+
 </body>
 </html>
