@@ -2,14 +2,56 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        #nav {
+   position: absolute;
+   top: 0px;
+   right: 0px;
+   width: 100px;
+   height: 100%;
+   background-color: coral;
+
+    }
+    #nav a {
+   display: block;
+   margin: 10px 0;
+   padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+   color: #fff;
+   text-decoration: none;
+}
+#nav a:hover {
+   background-color: #ff8c00;
+   color: #000;
+   transition: 0.3s;
+}
+
+
+    </style>
     <meta charset="utf-8"/>
     <title>Chat Rooms</title>
 </head>
 <body>
-    Join existing game room or create yout own<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+    <div id="nav">
+        <a href="/logout">Wyloguj się</a>
+        <a href="#">Kontakt</a>
+    </div>
+
+
+    Dołącz do istniejacego pokoju lub utwórz nowy<br>
+    <form method="POST" id="form">
+        {% csrf_token %}
+        <input id="room-name-input" type="text" size="100" name="value"><br>
+        <input id="room-name-submit" type="button" value="Enter" name="submit">
+<!--        <button id="room-name-submit" type="submit">enter</button>-->
+    </form>
+    Lista dostępnych pokoji: <br>
+
+    {% for pokoj in pokoje %}
+        <a href="kalambury/{{pokoj}}">{{pokoj}}</a> <br>
+    {%endfor%}
     {{ game_name|json_script:"game_name" }}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         const game_name = JSON.parse(document.getElementById('game_name').textContent);
@@ -24,7 +66,11 @@
         document.querySelector('#room-name-submit').onclick = function(e) {
             var roomName = document.querySelector('#room-name-input').value;
             window.location.pathname = game_name + roomName ;
+
         };
+
+
+
     </script>
 </body>
 </html>

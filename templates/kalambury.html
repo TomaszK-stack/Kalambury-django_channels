@@ -9,9 +9,18 @@
 </head>
 <body>
 <div class = "canvas_cont">
-    <canvas id="drawing" width="300" height="300" ></canvas>
-</div>
+    <canvas id="drawing" width="600" height="600" ></canvas>
 
-<script src="{% static 'kalambury.js' %}"></script>
+
+<div class = "form_cont">
+    {{ room_name|json_script:"room-name" }}
+    {{ username|json_script:"username" }}
+    <textarea id="chat-log" cols="40" rows="30"></textarea><br>
+    <input id="chat-message-input" type="text" size="20"><br>
+    <input id="chat-message-submit" type="button" value="Send">
+</div>
+</div>
+<input id="dostep" type="button" value="Chcę rysować">
+<script src="{% static 'chat.js' %}"></script>
 </body>
 </html>
