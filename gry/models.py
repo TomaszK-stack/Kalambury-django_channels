@@ -8,3 +8,6 @@ class Kalambury_slowa(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User , on_delete = models.CASCADE , related_name = 'to_user')
     czy_moze_rysowac = models.BooleanField(default = False)
+
+class Pokoj(models.Model):
+    nazwa = models.CharField(max_length = 20)

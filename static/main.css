@@ -37,9 +37,9 @@ input[type="text"], input[type="password"] {
   border-radius: 4px;
 }
 
-input[type="submit"] {
+button {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: coral;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -76,7 +76,7 @@ input[type="submit"]:hover {
 
 .canvas_cont{
     display:flex;
-    height: 800px;
+    height: 570px;
     width: 800px;
     border: 2px solid black;
 }
@@ -91,6 +91,8 @@ input[type="submit"]:hover {
 
 .form_cont{
     /*stylowanie formularza*/
-    margin-left: auto;
+  position:relative;
+    margin-left: 250px;
 }
+
 

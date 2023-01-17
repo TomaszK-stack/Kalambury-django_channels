@@ -6,11 +6,13 @@ from .models import Kalambury_slowa
 import random
 
 class ChatConsumer(WebsocketConsumer):
-    slowo = ""
 
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = "chat_%s" % self.room_name
+        if self.room_name not in rc.pokoje:
+            rc.pokoje.append(self.room_name)
+
 
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
@@ -45,9 +47,16 @@ class ChatConsumer(WebsocketConsumer):
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name, {"type": "chat_message", "message": message}
             )
-            if message == self.slowo:
+            slowo = rc.slowo_pokoj[self.room_name]
+            if message == slowo:
+                username = text_data_json['username']
                 async_to_sync(self.channel_layer.group_send)(
-                    self.room_group_name , {"type": "koniec" })
+                    self.room_group_name , {"type": "koniec", "username":username })
+                uzytkownicy = rc.rooms_consumers[self.room_name]
+                for uzyt in uzytkownicy:
+                    uzytkownicy[uzyt] = False
+                rc.rooms_consumers[self.room_name] = uzytkownicy
+
 
 
 
@@ -64,15 +73,22 @@ class ChatConsumer(WebsocketConsumer):
             async_to_sync(self.send(text_data = json.dumps(
                 {"type" : "odpowiedz", "odpowiedz": x(czy_pozwolic) })
             ))
-            if x(czy_pozwolic) == True:
+            if x(czy_pozwolic) == "TAK":
                 uzytkownicy[self] = True
                 rc.rooms_consumers[self.room_name] = uzytkownicy
-                numer = random.randint(0, len(rc.slowa))
-                self.slowo = rc.slowa[numer]
+                numer = random.randint(0, len(rc.slowa)-1)
+                slowo = rc.slowa[numer]
+                rc.slowo_pokoj[self.room_name] = slowo
+
                 async_to_sync(self.send(text_data = json.dumps(
                     {"type": "slowo" , "slowo": slowo})
                 ))
-
+                print("Wysłano słowo")
+        elif (text_data_json.get("type") == "hello"):
+            username = text_data_json['username']
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name , {"type": "hello", "username": username}
+            )
 
 
 
@@ -85,12 +101,20 @@ class ChatConsumer(WebsocketConsumer):
 
     def drawing(self, event):
         image = event["image"]
-        type = "image_message"
-        self.send(text_data = json.dumps({"image":image, "type":type}))
+        self.send(text_data = json.dumps({"image":image, "type":"drawing"}))
+
+    def koniec(self , event):
+        username = event['username']
+
+        self.send(text_data = json.dumps({"type": "koniec","username":username }))
+    def hello(self, event):
+        username = event['username']
+
+        self.send(text_data = json.dumps({"type": "hello", "username": username}))
 
 def zapytanie(slownik):
     for key in slownik:
         if slownik[key] == True:
             return False
-        else:
-            return True
+
+    return True
